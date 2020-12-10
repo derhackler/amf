@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.Root
-import amf.core.annotations.ExternalFragmentRef
+import amf.core.annotations.{ExternalFragmentRef, LexicalInformation, SourceAST, SourceLocation, SourceNode}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{
@@ -47,7 +47,7 @@ case class RamlJsonSchemaExpression(key: YNode,
   override def parseValue(origin: ValueAndOrigin): AnyShape = {
     val parsed: AnyShape = origin.oriUrl match {
       case Some(url) =>
-        parseValueWithUrl(origin, url).add(ExternalReferenceUrl(url))
+        fixLexicalAnnotations(parseValueWithUrl(origin, url)).add(ExternalReferenceUrl(url))
       case None =>
         val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, None)
         shape.annotations += ParsedJSONSchema(origin.text)
@@ -75,6 +75,16 @@ case class RamlJsonSchemaExpression(key: YNode,
 
     parsed.annotations += SchemaIsJsonSchema()
     parsed
+  }
+
+  // fixme: hack annotations until correct inheritance is done (APIMF-2732)
+  private def fixLexicalAnnotations(shape: AnyShape): AnyShape = {
+    val newShape = shape.copyShape()
+    newShape.annotations.reject(
+      ann =>
+        ann.isInstanceOf[LexicalInformation] || ann.isInstanceOf[SourceLocation] || ann.isInstanceOf[SourceAST] || ann
+          .isInstanceOf[SourceNode])
+    newShape.add(Annotations(value))
   }
 
   private def parseValueWithUrl(origin: ValueAndOrigin, url: String) = {
