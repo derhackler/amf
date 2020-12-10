@@ -1113,14 +1113,14 @@
           "declared-element": {
             "#7": ""
           },
+          "type-property-lexical-info": {
+            "#7": "[(3,2)-(3,8)]"
+          },
           "lexical": {
             "apiContract:examples": "[(12,4)-(16,0)]",
             "shacl:closed": "[(4,2)-(4,31)]",
-            "#7": "[(10,2)-(24,1)]",
+            "#7": "[(10,11)-(16,0)]",
             "shacl:name": "[(10,2)-(10,10)]"
-          },
-          "type-property-lexical-info": {
-            "#7": "[(3,2)-(3,8)]"
           },
           "parsed-json-schema": {
             "#7": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"merchant\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"operator\": {\r\n      \"type\": \"string\"\r\n    },\r\n\r\n    \"primaryApplicant\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    },\r\n    \"additionalApplicants\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    }\r\n  },\r\n  \"required\": [\r\n    \"merchant\",\r\n    \"operator\"\r\n  ]\r\n}"
