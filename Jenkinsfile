@@ -14,7 +14,7 @@ pipeline {
     GITHUB_ORG = 'aml-org'
     GITHUB_REPO = 'amf'
   }
-//  stages {
+  stages {
 //    stage('Test') {
 //      steps {
 //        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
